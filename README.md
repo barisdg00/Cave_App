@@ -52,20 +52,48 @@ Sürdürülebilirlik vizyonu çerçevesinde, depolama sürecindeki veriler üzer
 
 ### 1. API Sunucusunun Başlatılması
 Gerekli kütüphaneleri kurun ve Python sunucusunu çalıştırın:
+### 2. Flutter Uygulamasının Çalıştırma
+### 3. Donanım Bağlantısı
+ESP cihazınızın kodundaki SERVER_URL kısmına Flask sunucunuzun IP adresini girin. Sensör bağlantılarını yaptıktan sonra cihazı depoya yerleştirin.
 
-## Getting Started
+## 👥 Katkıda Bulunanlar
+Bu proje, *Kapadokya/Niğde Hackathon* kapsamında tarım teknolojilerini dijitalleştirmek amacıyla geliştirilmiştir.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+CaveApp - Geleceğin Tarımı, Doğanın Kalbinde.
+. Gerçek Zamanlı Rota Analizi (OSRM Entegrasyonu)
+Uygulama, kuş uçuşu mesafe yerine OSRM (Open Source Routing Machine) altyapısını kullanır.
+•
+Siz haritadan bir hedef seçtiğinizde, uygulama seçtiğiniz deponun koordinatları ile hedef koordinatları arasında karayolu rotası çizer.
+•
+Hesaplama, bu gerçek yol mesafesi (km) üzerinden yapılır.
+2. Akıllı Araç Önerisi (Coğrafi Mantık)
+CarbonService.dart içerisindeki suggestOptimalVehicle fonksiyonu, coğrafi konumlara göre en çevreci/mantıklı aracı önerir:
+•
+Liman Yakınlığı Analizi: Eğer hem çıkış deponuz hem de varış noktanız büyük liman şehirlerine (İzmir, Mersin, İstanbul vb.) 150 km'den yakınsa ve mesafe 400 km'den fazlaysa, sistem otomatik olarak "Deniz Yolu" önerir.
+•
+Mesafe ve Yük Dengesi: Mesafe 200 km'den fazla ve yük 30 tondan ağırsa "Demiryolu", 800 km'den uzak ve yük hafifse (hızlı teslimat gereksinimi varsayılarak) "Hava Kargo" önerilir.
+3. Dinamik Emisyon Formülü
+Karbon salınımı şu formülle hesaplanır:
+(Mesafe × Ağırlık × Araç Katsayısı) + (Mesafe × Aracın Boş Emisyonu)
+•
+Araç Katsayıları (kg CO2 / ton-km): Deniz yolu (0.015) en düşük, hava kargo (0.500) en yüksek emisyona sahiptir.
+•
+Boş Emisyon: Aracın yükü olmasa bile sadece yolu kat etmesinden kaynaklanan sabit salınım da hesaba katılır (Hava Kargo için km başına 1.5 kg, Tır için 0.25 kg).
+4. Çevresel ve Ekonomik Etki Dönüşümü
+Hesaplanan kg CO2 verisi, kullanıcıya daha anlamlı gelmesi için şu verilere dönüştürülür:
+•
+Ağaç Karşılığı: Bu salınımı nötrlemek için kaç yetişkin ağacın bir yıl boyunca çalışması gerektiği (1 ağaç ≈ 20 kg CO2).
+•
+Yakıt Sarfiyatı: Aracın tipine göre harcayacağı tahmini litre yakıt.
+•
+Karbon Vergisi (EU ETS): Avrupa Birliği standartlarındaki karbon fiyatlandırması (kg başına ~0.07€) üzerinden, lojistiğin potansiyel karbon maliyeti TL, USD ve EUR cinsinden canlı döviz kurlarıyla hesaplanır.
+5. Görselleştirme
+•
+Harita: flutter_map kullanılarak çizilen rota çizgisi (Polyline).
+•
+Analiz Paneli: Hesaplamanın hangi matematiksel formülle yapıldığını kullanıcıya şeffaf bir şekilde gösteren "Hesaplama Formülü" bölümü.
+Özetle; uygulama sadece bir hesap makinesi değil, harita üzerindeki iki nokta arasındaki lojistik senaryoyu simüle eden bir karar destek sistemidir.
 
 
 
